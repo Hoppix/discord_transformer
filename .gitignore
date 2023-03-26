@@ -5,6 +5,8 @@ dist
 .vscode
 *egg-info
 
+analysis
+*.ipynb
 data
 gpt2-discord_chat
 cached**
