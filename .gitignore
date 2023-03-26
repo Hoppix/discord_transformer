@@ -1,0 +1,10 @@
+*__pycache__*
+venv
+build
+dist
+.vscode
+*egg-info
+
+data
+gpt2-discord_chat
+cached**
