@@ -9,15 +9,13 @@ import src.generate.generate_training_data as training_data
 
 logging.info(f"cuda is: {torch.cuda.is_available()}")
 
-tokenizer = AutoTokenizer.from_pretrained("anonymous-german-nlp/german-gpt2")
-model = AutoModelWithLMHead.from_pretrained("anonymous-german-nlp/german-gpt2")
+MODEL_NAME = "anonymous-german-nlp/german-gpt2"
+TRAINED_MODEL_PATH = f"{os.getcwd()}/gpt2-discord_chat_merged"
 
-TRAINED_MODEL_PATH = f"{os.getcwd()}/gpt2-discord_chat"
+tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
+model = AutoModelWithLMHead.from_pretrained(MODEL_NAME)
 
 tokenizer.pad_token = tokenizer.eos_token # fix padding issue with gpt-2
-
-logging.info(f" Shape is {model.transformer.wte.weight.shape[0]}")
-logging.info(f" Tokenizer is {len(tokenizer)}")
 
 def run():
     train_dataset, test_dataset, data_collator = _load_dataset(training_data.TRAINING_DATA_PATH, training_data.VALIDATION_DATA_PATH, tokenizer)

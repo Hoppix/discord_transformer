@@ -13,21 +13,22 @@ VALIDATION_DATA_PATH = f"{os.getcwd()}/data/validation_data.csv"
 USER = "Hoppix#6723"
 
 def run():
-    # Load all data into data frame
     chat_df = load_data()
     logging.info(chat_df.head)
 
-    # Filter by one user
-    chat_df = chat_df.loc[chat_df["Author"] == USER]
+    # chat_df = chat_df.loc[chat_df["Author"] == USER]
+    chat_df = chat_df.drop(["Attachments", "Reactions"], axis=1)
+    chat_df = chat_df.dropna()
+    chat_df = chat_df[chat_df["Content"].str.contains("https://") == False]
+    chat_df = chat_df[chat_df["Content"].str.contains("http://") == False]
+    chat_df
     sentences = chat_df["Content"].tolist()
     sentences = [ str(sentence) for sentence in sentences]
 
     logging.info(sentences)
 
-    # Split training and validation set
     training_sentences, validation_sentences = train_test_split(sentences, test_size=0.2)
 
-    # Write training and validation data
     write_sentence_file(training_sentences, TRAINING_DATA_PATH)
     write_sentence_file(validation_sentences, VALIDATION_DATA_PATH)
 
